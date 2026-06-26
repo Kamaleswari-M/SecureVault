@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>SecureVault Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+
+        body{
+            background:#07111f;
+            color:white;
+            font-family:Segoe UI;
+        }
+
+        .navbar{
+            background:#0d1b2a;
+            box-shadow:0 3px 15px rgba(0,0,0,.4);
+        }
+
+        .brand{
+            font-size:28px;
+            font-weight:bold;
+            color:#4da3ff;
+        }
+
+        .welcome{
+            padding:30px;
+        }
+
+        .card{
+            border:none;
+            border-radius:15px;
+            background:#112240;
+            color:white;
+            box-shadow:0 0 15px rgba(0,140,255,.15);
+        }
+
+        .status-card{
+            text-align:center;
+            padding:20px;
+            transition:.3s;
+        }
+
+        .status-card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 0 20px #0d6efd;
+        }
+
+        .upload-card{
+            padding:25px;
+        }
+
+        table{
+            color:white;
+        }
+
+        .table-dark{
+            border-radius:15px;
+            overflow:hidden;
+        }
+
+        .download-btn{
+            border-radius:20px;
+        }
+
+        .logout-btn{
+            border-radius:20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark">
+
+<div class="container">
+
+<span class="brand">
+
+<i class="bi bi-shield-lock-fill"></i>
+
+SecureVault
+
+</span>
+
+<a href="/" class="btn btn-danger logout-btn">
+
+<i class="bi bi-box-arrow-right"></i>
+
+Logout
+
+</a>
+
+</div>
+
+</nav>
+
+<div class="container mt-4">
+
+<div class="welcome">
+
+<h2>
+
+
+
+Welcome,
+<span th:text="${username}"></span> 👋
+
+
+
+</h2>
+
+<p>
+
+    Secure File Storage
+
+</p>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="card status-card">
+
+<h1>🔐</h1>
+
+<h5>AES Encryption</h5>
+
+<p class="text-success">ACTIVE</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card status-card">
+
+<h1>👤</h1>
+
+<h5>Registered Users</h5>
+<h3 th:text="${userCount}"></h3>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card status-card">
+
+<h1>🛡</h1>
+
+<h5>Security</h5>
+
+<p class="text-success">PROTECTED</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card status-card">
+
+<h1>💾</h1>
+
+<h5>Encrypted Files</h5>
+<h3 th:text="${fileCount}"></h3>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card upload-card mt-4">
+
+<h4>
+
+<i class="bi bi-cloud-arrow-up-fill"></i>
+
+Upload Secure File
+
+</h4>
+
+<hr>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+
+<div class="row">
+
+<div class="col-md-8">
+
+<input class="form-control"
+
+type="file"
+
+name="file"
+
+required>
+
+</div>
+
+<div class="col-md-4">
+
+<button class="btn btn-primary w-100">
+
+<i class="bi bi-lock-fill"></i>
+
+Encrypt & Upload
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+
+<div class="card mt-4 p-4">
+
+<h4>
+
+<i class="bi bi-folder-fill"></i>
+
+Encrypted Files
+
+</h4>
+
+<hr>
+
+<table class="table table-dark table-hover">
+
+<thead>
+
+<tr>
+
+<th>File Name</th>
+
+<th width="150">Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="file : ${files}">
+
+<td>
+
+<i class="bi bi-file-earmark-fill"></i>
+
+<span th:text="${file}"></span>
+
+</td>
+
+<td>
+
+<a class="btn btn-success btn-sm download-btn"
+
+th:href="@{'/download/' + ${file}}">
+
+<i class="bi bi-download"></i>
+
+Download
+
+</a>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
